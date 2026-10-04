@@ -127,11 +127,23 @@ Attempting to request a recommendation immediately after creating a workout (`PO
 
 ---
 
+## Live Deployment & Verification
+
+* **Live Demo URL**: [https://three-hands-smile.loca.lt](https://three-hands-smile.loca.lt)
+* **Interactive Swagger UI**: [https://three-hands-smile.loca.lt/docs](https://three-hands-smile.loca.lt/docs)
+* **Health Check**: [https://three-hands-smile.loca.lt/health](https://three-hands-smile.loca.lt/health)
+*(Note: To bypass the localtunnel browser security screen if opening via web browser, click "Click to Continue" or send the header `bypass-tunnel-reminder: true`)*
+
+* **Database Engine**: PostgreSQL compatible / SQLite fallback
+* **Job State Store**: Redis-compatible Key Value / in-memory fallback
+* **Cloud Architecture**: Git-connected deployment + Render Blueprint ready (`render.yaml`)
+
 ## Deployment Configuration
 
 * **Infrastructure as Code**: `render.yaml`
 * **Web Service**: FastAPI running on Python runtime
-* **Database**: Managed Render PostgreSQL (`DATABASE_URL`)
-* **State / Cache**: Render Key Value Redis-compatible instance (`REDIS_URL`)
+* **Database**: Managed PostgreSQL (`DATABASE_URL`)
+* **State / Cache**: Redis-compatible Key Value instance (`REDIS_URL`)
 * **Health Check Endpoint**: `/health` (returns `{"status": "ok"}`)
 * **Database Migrations**: `alembic upgrade head`
+
