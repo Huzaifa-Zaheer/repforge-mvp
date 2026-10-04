@@ -1,0 +1,40 @@
+services:
+  # RepForge Web Service
+  - type: web
+    name: repforge-api
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: DATABASE_URL
+        fromDatabase:
+          name: repforge-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: repforge-redis
+          property: connectionString
+
+# PostgreSQL Database
+databases:
+  - name: repforge-db
+    region: oregon
+    plan: free
+    databaseName: repforge_db
+    user: repforge
+
+# Redis-compatible Key Value Store
+keyvalues:
+  - name: repforge-redis
+    region: oregon
+    plan: free
+    ipAllowList: [] # internal only
